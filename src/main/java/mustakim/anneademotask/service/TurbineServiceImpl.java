@@ -66,4 +66,10 @@ public class TurbineServiceImpl implements TurbineService {
         return formatter.formatCellValue(cell);
     }
 
+	@Override
+	public List<Turbine> getTurbineData() {
+		List<Turbine> data = turbineRepository.findAll();
+		return data;
+	}
+
 }
