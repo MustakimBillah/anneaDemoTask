@@ -19,10 +19,10 @@ public class Turbine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long searialNo;
-	private long timeStamp;
-	private double indicator;
-	private int turbine_id;
-	private int variable;
+	private Long searialNo;
+	private Long timeStamp;
+	private Double indicator;
+	private Integer turbine_id;
+	private Integer variable;
 	
 }
