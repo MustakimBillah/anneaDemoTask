@@ -27,4 +27,8 @@ public class TurbineController {
 	public List<Turbine> getTurbineData(){
 		return turbineService.getTurbineData();
 	}
+	@GetMapping("/getTurbineDataCount")
+	public int getTurbineDataCount(){
+		return turbineService.getTurbineData().size();
+	}
 }

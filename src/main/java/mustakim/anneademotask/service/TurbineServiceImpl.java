@@ -43,6 +43,7 @@ public class TurbineServiceImpl implements TurbineService {
                 rowData=getCellValue(row, 0);
                 convertedRow = rowData.split(",");
                 turbine=new Turbine();
+                turbine.setSerialNo((long) index);
                 turbine.setTimeStamp(datefmt.parse(convertedRow[0]).getTime());
                 turbine.setIndicator(Double.parseDouble(convertedRow[1]));
                 turbine.setTurbine_id(Integer.parseInt(convertedRow[2]));
