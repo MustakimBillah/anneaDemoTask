@@ -3,7 +3,9 @@ package mustakim.anneademotask.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -11,6 +13,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +52,7 @@ public class TurbineServiceImpl implements TurbineService {
                 turbine.setSerialNo((long) index);
                 turbine.setTimeStamp(datefmt.parse(convertedRow[0]).getTime());
                 turbine.setIndicator(Double.parseDouble(convertedRow[1]));
-                turbine.setTurbine_id(Integer.parseInt(convertedRow[2]));
+                turbine.setTurbineId(Integer.parseInt(convertedRow[2]));
                 turbine.setVariable(Integer.parseInt(convertedRow[3]));
         
                 turbines.add(turbine);
@@ -68,9 +74,15 @@ public class TurbineServiceImpl implements TurbineService {
     }
 
 	@Override
-	public List<Turbine> getTurbineData() {
-		List<Turbine> data = turbineRepository.findAll();
-		return data;
+	public Map<String, Object> getTurbineData() {
+		Pageable firstPageWithTwoElements = PageRequest.of(5, 10);
+		Map<String, Object> response = new HashedMap<String, Object>();
+		Slice<Turbine> data = turbineRepository.findByTurbineIdAndVariable(41,1,firstPageWithTwoElements);
+		response.put("data", data.getContent());
+		response.put("hasNext", data.hasNext());
+		response.put("hasPrevious", data.hasPrevious());
+		
+		return response;
 	}
 
 }

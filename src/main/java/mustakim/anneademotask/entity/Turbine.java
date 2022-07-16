@@ -26,7 +26,7 @@ public class Turbine {
 	private Long serialNo;
 	private Long timeStamp;
 	private Double indicator;
-	private Integer turbine_id;
+	private Integer turbineId;
 	private Integer variable;
 	
 }
