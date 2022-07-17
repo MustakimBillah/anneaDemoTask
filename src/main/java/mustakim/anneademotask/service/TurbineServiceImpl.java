@@ -1,6 +1,5 @@
 package mustakim.anneademotask.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,11 +15,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +31,8 @@ import mustakim.anneademotask.specification.TurbineSpecificationsBuilder;
 
 @Service
 public class TurbineServiceImpl implements TurbineService {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(TurbineServiceImpl.class);
 
 	@Autowired
 	private TurbineRepository turbineRepository;
@@ -69,7 +71,8 @@ public class TurbineServiceImpl implements TurbineService {
         turbineRepository.saveAll(turbines);
         
 		}catch(Exception ee) {
-			System.out.println(ee);
+			LOGGER.info(ee.toString());
+			return ee.getLocalizedMessage();
 		}
 		return "saved successfully";
 	}
@@ -139,7 +142,9 @@ public class TurbineServiceImpl implements TurbineService {
 	        }
 	        
 		}catch(Exception ee) {
-			
+			LOGGER.info(ee.toString());
+			result.put("ErrorMessage", ee.getLocalizedMessage());
+			return result;
 		}
 	        return result;
 	}
