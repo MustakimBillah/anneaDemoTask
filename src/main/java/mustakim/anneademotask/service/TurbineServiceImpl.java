@@ -133,6 +133,11 @@ public class TurbineServiceImpl implements TurbineService {
 	        result.put("pageNumber", data.getNumber()+1);
 	        result.put("numberOfElements", data.getNumberOfElements());
 	        
+	        for(Turbine t : data.getContent()) {
+	        	date=new Date(t.getTimeStamp());
+	            t.setDateTime(datefmt.format(date));
+	        }
+	        
 		}catch(Exception ee) {
 			
 		}

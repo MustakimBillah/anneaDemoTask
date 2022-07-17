@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,7 @@ public class Turbine {
 	private Double indicator;
 	private Integer turbineId;
 	private Integer variable;
+	@Transient 
+	private String  dateTime;
 
 }
