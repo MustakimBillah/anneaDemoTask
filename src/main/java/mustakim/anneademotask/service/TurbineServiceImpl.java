@@ -42,6 +42,7 @@ public class TurbineServiceImpl implements TurbineService {
         SimpleDateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String rowData=null;
         String[] convertedRow;
+        Long serialNo=turbineRepository.getMaxSerialNo();
         
         for (int index = 1; index < worksheet.getPhysicalNumberOfRows(); index++) {
            
@@ -49,7 +50,7 @@ public class TurbineServiceImpl implements TurbineService {
                 rowData=getCellValue(row, 0);
                 convertedRow = rowData.split(",");
                 turbine=new Turbine();
-                turbine.setSerialNo((long) index);
+                turbine.setSerialNo(serialNo++);
                 turbine.setTimeStamp(datefmt.parse(convertedRow[0]).getTime());
                 turbine.setIndicator(Double.parseDouble(convertedRow[1]));
                 turbine.setTurbineId(Integer.parseInt(convertedRow[2]));
@@ -73,16 +74,6 @@ public class TurbineServiceImpl implements TurbineService {
         return formatter.formatCellValue(cell);
     }
 
-	@Override
-	public Map<String, Object> getTurbineData() {
-		Pageable firstPageWithTwoElements = PageRequest.of(5, 10);
-		Map<String, Object> response = new HashedMap<String, Object>();
-		Slice<Turbine> data = turbineRepository.findByTurbineIdAndVariable(41,1,firstPageWithTwoElements);
-		response.put("data", data.getContent());
-		response.put("hasNext", data.hasNext());
-		response.put("hasPrevious", data.hasPrevious());
-		
-		return response;
-	}
+
 
 }

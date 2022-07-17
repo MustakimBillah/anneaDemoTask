@@ -12,5 +12,4 @@ import mustakim.anneademotask.entity.Turbine;
 public interface TurbineService {
 
 	public String saveFromExcel(MultipartFile files);
-	public Map<String, Object> getTurbineData();
 }

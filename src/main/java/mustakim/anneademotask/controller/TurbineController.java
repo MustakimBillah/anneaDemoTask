@@ -35,11 +35,6 @@ public class TurbineController {
 		return turbineService.saveFromExcel(files);
 	}
 	
-	@GetMapping("/getTurbineData")
-	public Map<String, Object> getTurbineData(){
-		return turbineService.getTurbineData();
-	}
-	
 	@GetMapping("/test")
 	public String test(@RequestParam(value = "search") String search){
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\"([^\"]+)\")");
