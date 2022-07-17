@@ -35,39 +35,9 @@ public class TurbineController {
 		return turbineService.saveFromExcel(files);
 	}
 	
-	@GetMapping("/test")
-	public String test(@RequestParam(value = "search") String search){
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\"([^\"]+)\")");
-        Matcher matcher = pattern.matcher(search + ",");
-        
-        while (matcher.find()) {
-           String a = matcher.group(1);
-           String b = matcher.group(2);
-           String c = matcher.group(3);
-           String d = c.replace("\"", "");
-           a=a;
-           
-        }
-        String res="asuhdasuhdsadh";
-		return res;
-	}
-	
 	@GetMapping("/search")
-    public Slice<Turbine> search(@RequestParam(value = "search") String search) {
-        TurbineSpecificationsBuilder builder = new TurbineSpecificationsBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\"([^\"]+)\")");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            String a = matcher.group(1);
-            String b = matcher.group(2);
-            String c = matcher.group(3);
-            String d = c.replace("\"", "");
-            builder.with(a, b, d);
-        }
-        
-        Specification<Turbine> spec = builder.build();
-        Pageable firstPageWithTwoElements = PageRequest.of(0, 100);
-        return turbineRepository.findAll(spec,firstPageWithTwoElements);
+    public Map<String, Object> search(@RequestParam(value = "search") String search) {
+        return turbineService.searchData(search);
     }
 
 }
